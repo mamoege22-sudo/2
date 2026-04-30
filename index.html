@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONVERSE İSTİLASI!</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Kaydırma çubuğunu gizle ki tam bir şaka gibi dursun */
+            background-color: white;
+            cursor: pointer;
+        }
+
+        .background-text {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 5rem;
+            font-weight: 900;
+            color: #eeeeee;
+            z-index: -1;
+            text-transform: uppercase;
+            user-select: none;
+        }
+
+        /* Uçuşan ayakkabıların temel stili */
+        .converse-item {
+            position: absolute;
+            width: 150px; /* Ayakkabı boyutu */
+            height: auto;
+            pointer-events: none; /* Üst üste binince tıklamayı engellemesin */
+            animation: spin 10s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Bir uyarı mesajı (şaka amaçlı) */
+        #warning {
+            position: fixed;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            font-family: 'Comic Sans MS', cursive;
+            color: red;
+            font-weight: bold;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background-text">BAŞKA BİR ŞEY YOK. SADECE CONVERSE.</div>
+    <div id="warning">EKRANA TIKLA! DAHA FAZLA CONVERSE!</div>
+
+    <script>
+        // Beyaz Converse görselleri dizisi (Örnek şeffaf PNG'ler)
+        const images = [
+            'https://pngimg.com/uploads/converse/converse_PNG43.png',
+            'https://pngimg.com/uploads/converse/converse_PNG12.png',
+            'https://pngimg.com/uploads/converse/converse_PNG3.png'
+        ];
+
+        function createConverse() {
+            const img = document.createElement('img');
+            img.src = images[Math.floor(Math.random() * images.length)];
+            img.className = 'converse-item';
+            
+            // Rastgele konumlar
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 100);
+            
+            // Rastgele hız ve dönme hızı
+            const duration = Math.random() * 5 + 2;
+            const delay = Math.random() * 5;
+            
+            img.style.left = x + 'px';
+            img.style.top = y + 'px';
+            img.style.animationDuration = duration + 's';
+            img.style.animationDelay = delay + 's';
+            
+            // Rastgele boyutlar
+            const scale = Math.random() * 1.5 + 0.5;
+            img.style.transform = `scale(${scale})`;
+
+            document.body.appendChild(img);
+        }
+
+        // Başlangıçta 50 tane oluştur
+        for(let i=0; i < 50; i++){
+            createConverse();
+        }
+
+        // Ekrana tıklandığında 10 tane daha oluştur (Daha fazla kaos!)
+        document.addEventListener('click', () => {
+            for(let i=0; i < 10; i++){
+                createConverse();
+            }
+        });
+
+        // Kendi kendine çoğalmaya devam etsinler
+        setInterval(createConverse, 1000);
+    </script>
+
+</body>
+</html>
